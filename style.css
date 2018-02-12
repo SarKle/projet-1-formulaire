@@ -1,0 +1,75 @@
+#test_email{
+  display: none;
+}
+
+body{
+  margin: 50px auto;
+  text-align: center;
+  width: 1000px;
+  font-family: Bellota;
+  background-color: #FFF;
+}
+
+@font-face {
+  font-family:"Bellota";
+  src:url("Bellota-Regular.otf");
+}
+
+.logo img{
+  border:4px solid #15c5bd;
+  border-radius: 200px;
+}
+
+form{
+  margin-left: -85px;
+  width: 1200px;
+  background-color: #303030;
+  color: #15c5bd;
+  line-height: 50px;
+  font-size: 20px;
+  margin-bottom: 50px;
+}
+
+#contact{
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.info{
+  float: left;
+  text-align: left;
+}
+
+.text{
+}
+
+.nom input{
+  margin-left: 40px;
+}
+
+.pays input{
+  margin-left: 43px;
+}
+
+.email input{
+  margin-left: 25px;
+}
+
+#sujet{
+  text-align: left;
+  padding-left: 500px;
+}
+
+p{
+  color: #da183b;
+  font-size: 17px;
+}
+
+footer{
+  font-size: 14px;
+  background-color: #FFF;
+}
+
+h2{
+  border-bottom: 2px solid #15c5bd;
+}
