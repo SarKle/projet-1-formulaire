@@ -69,6 +69,13 @@ p{
   color:#303030;
 }
 
+.confirmation{
+  text-align: left;
+  padding-top: 20px;
+  font-size: 18px;
+  line-height: 30px;
+}
+
 #retour{
   padding-top: 40px;
   background-color: #FFF;
