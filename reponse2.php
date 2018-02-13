@@ -22,11 +22,13 @@
      <p class="merci"> L'équipe technique de <strong>Hackers Poulette</strong> vous remercie pour votre message <?php echo $genre $nom ?>.<br/>
      Nous vous répondrons dans les plus brefs délais. </p>
      <h2> Vos informations: </h2>
+     <div class="confirmation">
      Nom, prénom: <?php echo $nom, $prenom;?> <br/>
      Pays: <?php echo "$pays"; ?> <br/>
      Email: <?php echo "$email"; ?> <br/>
      Sujet de votre demande: <?php echo "$sujet"; ?> <br/>
      Votre message: <?php echo "$message"; ?> <br/>
+   </div>
     <form action="contact.php" method="post">
       <div id="retour">
         <input type="submit" name="submit" value="Retour au formulaire"/>
