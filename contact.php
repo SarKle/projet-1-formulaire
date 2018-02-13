@@ -48,13 +48,32 @@
                 </div>
                 </select>
                 <br><label for="message"> Message*:</label> <br/>
-                  <textarea placeholder="Votre message" rows="18" cols="80" name="mainmessage"> Votre message </textarea> <br/>
+                  <textarea placeholder="Votre message" rows="18" cols="80" name="mainmessage"> </textarea> <br/>
                     <input type="submit" name="submit" value="Envoyer" class="submit"/>
                     <p> * Les champs suivis d'un astérisque sont obligatoires</p>
             </section>
           </fieldset>
         </form>
+
           <?php
+          //sanitisation
+          $options=array(
+            "gender" => FILTER_SANITIZE_STRING,
+            "lastname" => FILTER_SANITIZE_STRING,
+            "firstname" => FILTER_SANITIZE_STRING,
+            "country" => FILTER_SANITIZE_STRING,
+            "email" => FILTER_SANITIZE_EMAIL,
+            "subject" => FILTER_SANITIZE_STRING,
+            "mainmessage" => FILTER_SANITIZE_STRING);
+          )
+          $result=filter_input_array(INPUT_POST, $options);
+            if($result!=null AND $result !=FALSE){
+              echo "Tous les champs ont été nettoyés!";
+            }
+            else{
+              echo "Un champ est vide ou n'est pas correct!";
+            }
+
             $destinataire="sarahklewiec@gmail.com";
             $form_action="contact.php";
             // Message de confirmation du mail
@@ -69,6 +88,8 @@
             $email=(isset ($_POST["email"])) ? Rec($_POST["email"]) : "";
             $sujet=(isset ($_POST["subject"])) ? Rec($_POST["subject"]) : "";
             $message=(isset ($_POST["mainmessage"])) ? Rec($_POST["mainmessage"]) : "";
+
+            //print_r($genre, $nom, $renom, $pays, $email, $sujet, $message);
 
               if (isset($_POST["envoi"])) {
                 if(($nom !="")&&($email !="") && ($sujet !="")){
