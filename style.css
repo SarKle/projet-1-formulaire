@@ -65,6 +65,16 @@ p{
   font-size: 17px;
 }
 
+.merci{
+  color:#303030;
+}
+
+#retour{
+  padding-top: 40px;
+  background-color: #FFF;
+  text-align: right;
+}
+
 footer{
   font-size: 14px;
   background-color: #FFF;
