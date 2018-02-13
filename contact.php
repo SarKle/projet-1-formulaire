@@ -48,7 +48,7 @@
                 </div>
                 </select>
                 <br><label for="message"> Message*:</label> <br/>
-                  <textarea name="message" value="Votre message" rows="18" cols="80" name="mainmessage"> Votre message </textarea> <br/>
+                  <textarea placeholder="Votre message" rows="18" cols="80" name="mainmessage"> Votre message </textarea> <br/>
                     <input type="submit" name="submit" value="Envoyer" class="submit"/>
                     <p> * Les champs suivis d'un astérisque sont obligatoires</p>
             </section>
@@ -56,27 +56,38 @@
         </form>
           <?php
             $destinataire="sarahklewiec@gmail.com";
-            $headers ='From: "nom"<sarahklewiec@gmail.com>'."\n";
-            $headers .='Reply-To: sarahklewiec@gmail.com'."\n";
-            $headers .='Content-Type: text/html; charset="iso-8859-1"'."\n";
-            $headers .='Content-Transfer-Encoding: 8bit';
-              $message ='<html>
-                          <head>
-                          <title>Hackers Poulette</title>
-                          </head>
-                          <body>
-                          Nous avons bien reçu votre demande, nous la traiterons dans les plus brefs délais. <br>
-                          L\'équipe Hackers Poulette.
-                          </body>
-                          </html>';
+            $form_action="contact.php";
+            // Message de confirmation du mail
+            $message_non_envoye="L'envoi du message a échoué, veuillez réessayer SVP.";
+            // Message d'erreur du formulaire
+            $message_formulaire_invalide ="Veuillez vérifier vos coordonnées SVP.";
+            // Formulaire envoyé, récupération des champs
+            $genre=(isset ($_POST["gender"])) ? Rec($_POST["gender"]): "";
+            $nom=(isset ($_POST["lastname"])) ? Rec($_POST["lastname"]): "";
+            $prenom=(isset ($_POST["firstname"])) ? Rec($_POST["firstname"]) : "";
+            $pays=(isset ($_POST["country"])) ? Rec($_POST["country"]) : "";
+            $email=(isset ($_POST["email"])) ? Rec($_POST["email"]) : "";
+            $sujet=(isset ($_POST["subject"])) ? Rec($_POST["subject"]) : "";
+            $message=(isset ($_POST["mainmessage"])) ? Rec($_POST["mainmessage"]) : "";
 
-                if(mail('sarahklewiec@gmail.com', 'Sujet', $message, $headers)){
-                  echo 'Votre demande a bien été envoyée';
+              if (isset($_POST["envoi"])) {
+                if(($nom !="")&&($email !="") && ($sujet !="")){
+                  // variables remplies, envoi EMAIL
+                  $headers  = 'From:'.$nom.' <'.$email.'>' . "\r\n";
+				              // envoyer une copie au visiteur ?
+		                    if ($copie == 'oui'){
+			                    $cible = $destinataire.';'.$email;
+                            echo "Merci. Votre message a bien été envoyé";
+		                    }
+		                    else{
+			                    $cible = $destinataire;
+                            echo "Merci. Votre message a bien été envoyé";
+		                    };
                 }
-                  else{
-                {
-                  echo 'Le message n\'a pu être envoyé';
-                }
+              }
+            //envoi du mail
+
+
           ?>
           <footer>
             Copyright © 2018 L&S Developement. All rights reserved.
