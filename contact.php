@@ -19,27 +19,27 @@
           <legend> Envoyer un message au service technique </legend>
             <section class="info">
               <label for "genre"> GENRE*:</label>
-                <input type="radio" name="gender" value="Madame">Femme
-                <input type="radio" name="gender" value="Mademoiselle">Homme <br/>
+                <input type="radio" name="genre" value="Madame">Femme
+                <input type="radio" name="genre" value="Mademoiselle">Homme <br/>
               <div class="nom">
-                <label for"nom"> NOM*: </label> <input type="text" name="lastname" required/> <br/>
+                <label for"nom"> NOM*: </label> <input type="text" value="nom" required/> <br/>
               </div>
               <div class="prenom">
-                <label for"prenom"> PRENOM*: </label> <input type="text" name="firstname" required/> <br/>
+                <label for"prenom"> PRENOM*: </label> <input type="text" name="prenom" required/> <br/>
               </div>
               <div class="pays">
-                <label for "pays"> PAYS* </label> <input type="text" name= "country" vrequired/> <br/>
+                <label for "pays"> PAYS* </label> <input type="text" name= "pays" required/> <br/>
               </div>
               <div class="email">
-                <label for "adresse email"> EMAIL*: </label> <input type="email" name="email" required/> <br/>
+                <label for "email"> EMAIL*: </label> <input type="email" name="email" required/> <br/>
               </div>
               <!-- Vérification antispam honeypot -->
-              <input id="test_email" name="email" size="30" type="text" value="test_email"/>
+              <input id="test_email" name="test_email" size="30" type="text" value="test_email"/>
             </section>
             <section class="text">
               <div id="sujet">
               <label for "sujet"> Sujet*: </label>
-                <select name="sujet" size="1" name="subject">
+                <select name="sujet" size="1" value="sujet">
                   <option> Info produit </option>
                   <option> Problème de montage </option>
                   <option> Activation garantie </option>
@@ -48,15 +48,14 @@
                 </div>
                 </select>
                 <br><label for="message"> Message*:</label> <br/>
-                  <textarea placeholder="Votre message" rows="18" cols="80" name="mainmessage"> </textarea> <br/>
+                  <textarea placeholder="Votre message" rows="18" cols="80" name="message"> </textarea> <br/>
                     <input type="submit" name="submit" value="Envoyer" class="submit"/>
                     <p> * Les champs suivis d'un astérisque sont obligatoires</p>
             </section>
           </fieldset>
         </form>
-
+          <div class="test">
           <?php
-          //sanitisation
           $options=array(
             "gender" => FILTER_SANITIZE_STRING,
             "lastname" => FILTER_SANITIZE_STRING,
@@ -65,14 +64,13 @@
             "email" => FILTER_SANITIZE_EMAIL,
             "subject" => FILTER_SANITIZE_STRING,
             "mainmessage" => FILTER_SANITIZE_STRING);
-          )
           $result=filter_input_array(INPUT_POST, $options);
-            if($result!=null AND $result !=FALSE){
-              echo "Tous les champs ont été nettoyés!";
-            }
-            else{
-              echo "Un champ est vide ou n'est pas correct!";
-            }
+          if($result!=null AND $result !=FALSE){
+             echo "Tous les champs ont été nettoyés!";
+          }
+          else{
+           echo "Un champ est vide ou n'est pas correct!";
+          }
 
             $destinataire="sarahklewiec@gmail.com";
             $form_action="contact.php";
@@ -89,10 +87,8 @@
             $sujet=(isset ($_POST["subject"])) ? Rec($_POST["subject"]) : "";
             $message=(isset ($_POST["mainmessage"])) ? Rec($_POST["mainmessage"]) : "";
 
-            //print_r($genre, $nom, $renom, $pays, $email, $sujet, $message);
-
               if (isset($_POST["envoi"])) {
-                if(($nom !="")&&($email !="") && ($sujet !="")){
+                  if(($nom !="")&&($email !="") && ($sujet !="")){
                   // variables remplies, envoi EMAIL
                   $headers  = 'From:'.$nom.' <'.$email.'>' . "\r\n";
 				              // envoyer une copie au visiteur ?
@@ -103,13 +99,11 @@
 		                    else{
 			                    $cible = $destinataire;
                             echo "Merci. Votre message a bien été envoyé";
-		                    };
+		                    }
                 }
               }
-            //envoi du mail
-
-
-          ?>
+            ?>
+          </div>
           <footer>
             Copyright © 2018 L&S Developement. All rights reserved.
           </footer>
