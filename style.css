@@ -90,3 +90,7 @@ footer{
 h2{
   border-bottom: 2px solid #15c5bd;
 }
+
+.test{
+  display: none;
+}
