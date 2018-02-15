@@ -6,6 +6,8 @@
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
+
+
     <section class="logo">
       <img src="logo.png" alt="logo Hackers Poulette"/>
     </section>
@@ -14,7 +16,7 @@
         <h2> Contactez-nous à tout moment <br>
           et nous vous répondrons le plus rapidement possible.</h2>
       </div>
-      <form action="reponse.php" method="post">
+      <form action="reponse2.php" method="post">
         <fieldset>
           <legend> Envoyer un message au service technique </legend>
             <section class="info">
@@ -22,7 +24,7 @@
                 <input type="radio" name="genre" value="Madame">Femme
                 <input type="radio" name="genre" value="Mademoiselle">Homme <br/>
               <div class="nom">
-                <label for"nom"> NOM*: </label> <input type="text" value="nom" required/> <br/>
+                <label for"nom"> NOM*: </label> <input type="text" name="nom" required/> <br/>
               </div>
               <div class="prenom">
                 <label for"prenom"> PRENOM*: </label> <input type="text" name="prenom" required/> <br/>
@@ -286,14 +288,14 @@
         </form>
           <div class="test">
           <?php
-          $sanitization=array(
-            "gender" => FILTER_SANITIZE_STRING,
-            "lastname" => FILTER_SANITIZE_STRING,
-            "firstname" => FILTER_SANITIZE_STRING,
-            "country" => FILTER_SANITIZE_STRING,
-            "email" => FILTER_SANITIZE_EMAIL,
-            "subject" => FILTER_SANITIZE_STRING,
-            "mainmessage" => FILTER_SANITIZE_STRING);
+            $sanitization=array(
+              "genre" => FILTER_SANITIZE_STRING,
+              "nom" => FILTER_SANITIZE_STRING,
+              "prenom" => FILTER_SANITIZE_STRING,
+              "pays" => FILTER_SANITIZE_STRING,
+              "email" => FILTER_SANITIZE_EMAIL,
+              "sujet" => FILTER_SANITIZE_STRING,
+              "mainmessage" => FILTER_SANITIZE_STRING);
           $result=filter_input_array(INPUT_POST, $sanitization);
           if($result!=null AND $result !=FALSE){
              echo "Tous les champs ont été nettoyés!";
@@ -302,37 +304,41 @@
            echo "Un champ est vide ou n'est pas correct!";
           }
 
-            $destinataire="sarahklewiec@gmail.com";
-            $form_action="contact.php";
-            // Message de confirmation du mail
-            $message_non_envoye="L'envoi du message a échoué, veuillez réessayer SVP.";
-            // Message d'erreur du formulaire
-            $message_formulaire_invalide ="Veuillez vérifier vos coordonnées SVP.";
-            // Formulaire envoyé, récupération des champs
-            $genre=(isset ($_POST["gender"])) ? Rec($_POST["gender"]): "";
-            $nom=(isset ($_POST["lastname"])) ? Rec($_POST["lastname"]): "";
-            $prenom=(isset ($_POST["firstname"])) ? Rec($_POST["firstname"]) : "";
-            $pays=(isset ($_POST["country"])) ? Rec($_POST["country"]) : "";
-            $email=(isset ($_POST["email"])) ? Rec($_POST["email"]) : "";
-            $sujet=(isset ($_POST["subject"])) ? Rec($_POST["subject"]) : "";
-            $message=(isset ($_POST["mainmessage"])) ? Rec($_POST["mainmessage"]) : "";
+          if($_POST){
+            $nom=($_POST["nom"]);
+            $prenom=($_POST["prenom"]);
+            $genre=($_POST["genre"]);
+            $mail=($_POST["mail"]);
+            $pays=($_POST["pays"]);
+            $sujet=($_POST["sujet"]);
+            $message=($_POST["mainmessage"]);
+            print_r($_POST);
 
-              if (isset($_POST["envoi"])) {
-                  if(($nom !="")&&($email !="") && ($sujet !="")){
-                  // variables remplies, envoi EMAIL
-                  $headers  = 'From:'.$nom.' <'.$email.'>' . "\r\n";
-				              // envoyer une copie au visiteur ?
-		                    if ($copie == 'oui'){
-			                    $cible = $destinataire.';'.$email;
-                            echo "Merci. Votre message a bien été envoyé";
-		                    }
-		                    else{
-			                    $cible = $destinataire;
-                            echo "Merci. Votre message a bien été envoyé";
-		                    }
-                }
-              }
-            ?>
+            $email = "Message de :" . $nom . $prenom;
+            $email .= "Email " . $mail;
+            $email .= "Pays " . $pays;
+            $email .= "Sujet" . $sujet;
+            $email .= "Message :". $message;
+          }
+
+            //envoi du mail
+            $destinataire="sarahklewiec@gmail.com";
+            $form_action="index.php";
+            // Message de confirmation du mail
+            //$message_non_envoye="L'envoi du message a échoué, veuillez réessayer SVP.";
+            // Message d'erreur du formulaire
+            //$message_formulaire_invalide ="Veuillez vérifier vos coordonnées SVP.";
+            // Formulaire envoyé, récupération des champs
+
+            echo "From: ".$nom." ".$prenom."".
+                 "Genre: ".$sexe.
+                 "Adresse email: ".$mail.
+                 "Pays: ".$pays.
+                 "Sujet: ".$sujet.
+                 "Message: ".$message;
+            mail($destinataire,$sujet,$email);
+
+          ?>
           </div>
           <footer>
             Copyright © 2018 L&S Developement. All rights reserved.
