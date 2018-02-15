@@ -17,6 +17,11 @@
       $email=$_POST["email"];
       $sujet=$_POST["sujet"];
       $message=$_POST["mainmessage"];
+
+      $destinataire="sarahklewiec@gmail.com";
+
+      mail($destinataire,$sujet,$message);
+
      ?>
 
      <p class="merci"> L'équipe technique de <strong>Hackers Poulette</strong>
@@ -28,11 +33,28 @@
      <?php echo "<strong> Adresse email: </strong> $email"; ?> <br/>
      <?php echo "<strong> Sujet de votre demande: </strong> $sujet"; ?> <br/>
      <?php echo "<strong> Votre message: </strong> $message"; ?> <br/>
-   </div>
-    <form action="contact.php" method="post">
-      <div id="retour">
-        <input type="submit" name="submit" value="Retour au formulaire"/>
-      </div>
-    </form>
-   </body>
+    </div>
+      <form action="index.php" method="post">
+        <div id="retour">
+          <input type="submit" name="submit" value="Retour au formulaire"/>
+        </div>
+      </form>
+      <?php
+        $sanitization=array(
+              "genre" => FILTER_SANITIZE_STRING,
+              "nom" => FILTER_SANITIZE_STRING,
+              "prenom" => FILTER_SANITIZE_STRING,
+              "pays" => FILTER_SANITIZE_STRING,
+              "email" => FILTER_SANITIZE_EMAIL,
+              "sujet" => FILTER_SANITIZE_STRING,
+              "mainmessage" => FILTER_SANITIZE_STRING);
+          $result=filter_input_array(INPUT_POST, $sanitization);
+          if($result!=null AND $result !=FALSE){
+             echo "Tous les champs ont été nettoyés!";
+          }
+          else{
+           echo "Un champ est vide ou n'est pas correct!";
+          }
+      ?>    
+  </body>
 </html>
