@@ -47,8 +47,9 @@ form{
   margin-left: 40px;
 }
 
-.pays input{
-  margin-left: 43px;
+.pays select{
+  margin-left: 41px;
+  width: 247px;
 }
 
 .email input{
@@ -65,6 +66,23 @@ p{
   font-size: 17px;
 }
 
+.merci{
+  color:#303030;
+}
+
+.confirmation{
+  text-align: left;
+  padding-top: 20px;
+  font-size: 18px;
+  line-height: 30px;
+}
+
+#retour{
+  padding-top: 40px;
+  background-color: #FFF;
+  text-align: right;
+}
+
 footer{
   font-size: 14px;
   background-color: #FFF;
@@ -72,4 +90,8 @@ footer{
 
 h2{
   border-bottom: 2px solid #15c5bd;
+}
+
+.test{
+  display: none;
 }
