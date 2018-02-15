@@ -19,10 +19,10 @@
           <legend> Envoyer un message au service technique </legend>
             <section class="info">
               <label for "genre"> GENRE*:</label>
-                <input type="radio" name="genre" value="Madame">Madame
-                <input type="radio" name="genre" value="Monsieur">Monsieur <br/>
+                <input type="radio" name="genre" value="Madame">Femme
+                <input type="radio" name="genre" value="Mademoiselle">Homme <br/>
               <div class="nom">
-                <label for"nom"> NOM*: </label> <input type="text" name="nom" required/> <br/>
+                <label for"nom"> NOM*: </label> <input type="text" value="nom" required/> <br/>
               </div>
               <div class="prenom">
                 <label for"prenom"> PRENOM*: </label> <input type="text" name="prenom" required/> <br/>
