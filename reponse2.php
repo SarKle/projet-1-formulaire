@@ -40,7 +40,7 @@
         </div>
       </form>
       <?php
-        $sanitization=array(
+        $options=array(
               "genre" => FILTER_SANITIZE_STRING,
               "nom" => FILTER_SANITIZE_STRING,
               "prenom" => FILTER_SANITIZE_STRING,
@@ -48,13 +48,24 @@
               "email" => FILTER_SANITIZE_EMAIL,
               "sujet" => FILTER_SANITIZE_STRING,
               "mainmessage" => FILTER_SANITIZE_STRING);
-          $result=filter_input_array(INPUT_POST, $sanitization);
+          $result=filter_input_array(INPUT_POST, $options);
           if($result!=null AND $result !=FALSE){
              echo "Tous les champs ont été nettoyés!";
           }
           else{
            echo "Un champ est vide ou n'est pas correct!";
           }
-      ?>    
+          foreach($options as $key => $value)
+         {
+           $result[$key]=trim($result[$key]);
+         }
+         echo $result['genre'];
+	       echo $result['nom'];
+	       echo $result['prenom'];
+	       echo $result['pays'];
+         echo $result['email'];
+         echo $result['sujet'];
+         echo $result['mainmessage'];
+      ?>
   </body>
 </html>
