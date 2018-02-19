@@ -1,3 +1,86 @@
+<?php
+ini_set("display_errors",0);error_reporting(0);
+$nom=$_POST["nom"];
+$prenom=$_POST["prenom"];
+$genre=$_POST["genre"];
+$pays=$_POST["pays"];
+$email=$_POST["email"];
+$sujet=$_POST["sujet"];
+$message=$_POST["mainmessage"];
+
+function isExist($var){
+  if(isset($var)){
+    echo $var;
+  }
+}
+if(isset($_POST["submit"])){
+  $options=array(
+              "genre" => FILTER_SANITIZE_STRING,
+              "nom" => FILTER_SANITIZE_STRING,
+              "prenom" => FILTER_SANITIZE_STRING,
+              "pays" => FILTER_SANITIZE_STRING,
+              "email" => FILTER_VALIDATE_EMAIL,
+              "sujet" => FILTER_SANITIZE_STRING,
+              "mainmessage" => FILTER_SANITIZE_STRING);
+  $result=filter_input_array(INPUT_POST, $options);
+  $checkResult=[];
+  if(isset($_POST["sujet"])){
+    foreach($_POST["sujet"]as $value){
+      $checkResult[]=filter_var($value, FILTER_SANITIZE_STRING);
+    }
+  }
+}
+  $result["sujet"]=$checkResult;
+    print_r($result);
+
+    $name=trim($result["nom"]);  //trim oblige à insérer un caractère, et pas des espaces dans le formulaire
+    $lastname=trim($result["prenom"]);
+    $email=trim($result["email"]);
+    $genre=trim($result["genre"]);
+    $message=trim($result["mainmessage"]);
+    $pays=trim($result["pays"]);
+
+      if (isset($nom) AND !empty($nom)) {
+              $verif_name="ok";
+      }
+      else{
+        $verif_name="nok";
+      }
+      if (isset($prenom) AND !empty($prenom)){
+              $verif_prenom="ok";
+      }
+      else{
+        $verif_prenom="nok";
+      }
+      if(isset($pays) AND !empty($pays)){
+        $verif_pays="ok";
+      }
+      else{
+        $verif_pays="nok";
+      }
+      if(isset($message) AND !empty($message)){
+        $verif_message="ok";
+      }
+      else{
+        $verif_message="nok";
+      }
+
+      if($verif_name=="ok" AND $verif_prenom =="ok" AND $verif_pays=="ok" and $verif_message=="ok"){
+        $envoi="Message de: $nom $prenom";
+        $envoi .="Genre: $genre";
+        $envoi .="Pays: $pays";
+        $envoi .="Sujet de votre demande: $sujet";
+        $envoi .="Votre message: $message";
+
+        $title="$genre $nom";
+        foreach ($_POST["sujet"] as $value){
+          $title .="$value";
+        }
+      }    //envoi du mail
+            mail("sarahklewiec@gmail.com", $title, $envoi);
+            header("Location: reponse2.php?name=$nom");
+?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -21,17 +104,17 @@
           <legend> Envoyer un message au service technique </legend>
             <section class="info">
               <label for "genre"> GENRE*:</label>
-                <input type="radio" name="genre" value="Madame">Femme
-                <input type="radio" name="genre" value="Mademoiselle">Homme <br/>
+                <input type="radio" name="genre" value="Madame" >Femme
+                <input type="radio" name="genre" value="Mademoiselle" >Homme <br/>
               <div class="nom">
-                <label for"nom"> NOM*: </label> <input type="text" name="nom" required/> <br/>
+                <label for"nom"> NOM*: </label> <input type="text" name="nom" /> <br/>
               </div>
               <div class="prenom">
-                <label for"prenom"> PRENOM*: </label> <input type="text" name="prenom" required/> <br/>
+                <label for"prenom"> PRENOM*: </label> <input type="text" name="prenom" /> <br/>
               </div>
               <div class="pays">
                 <label for "pays"> PAYS* </label>
-                <select name="pays" required>
+                <select name="pays" >
                   <option value="Afghanistan">Afghanistan </option>
                   <option value="Afrique_Centrale">Afrique_Centrale </option>
                   <option value="Afrique_du_sud">Afrique_du_Sud </option>
@@ -263,7 +346,7 @@
                 </select> <br/>
               </div>
               <div class="email">
-                <label for "email"> EMAIL*: </label> <input type="email" name="email" required/> <br/>
+                <label for "email"> EMAIL*: </label> <input type="email" name="email" /> <br/>
               </div>
               <!-- Vérification antispam honeypot -->
               <input id="test_email" name="test_email" size="30" type="text" value="test_email"/>
@@ -288,55 +371,6 @@
         </form>
           <div class="test">
           <?php
-            $sanitization=array(
-              "genre" => FILTER_SANITIZE_STRING,
-              "nom" => FILTER_SANITIZE_STRING,
-              "prenom" => FILTER_SANITIZE_STRING,
-              "pays" => FILTER_SANITIZE_STRING,
-              "email" => FILTER_SANITIZE_EMAIL,
-              "sujet" => FILTER_SANITIZE_STRING,
-              "mainmessage" => FILTER_SANITIZE_STRING);
-          $result=filter_input_array(INPUT_POST, $sanitization);
-          if($result!=null AND $result !=FALSE){
-             echo "Tous les champs ont été nettoyés!";
-          }
-          else{
-           echo "Un champ est vide ou n'est pas correct!";
-          }
-
-          if($_POST){
-            $nom=($_POST["nom"]);
-            $prenom=($_POST["prenom"]);
-            $genre=($_POST["genre"]);
-            $mail=($_POST["mail"]);
-            $pays=($_POST["pays"]);
-            $sujet=($_POST["sujet"]);
-            $message=($_POST["mainmessage"]);
-            print_r($_POST);
-
-            $email = "Message de :" . $nom . $prenom;
-            $email .= "Email " . $mail;
-            $email .= "Pays " . $pays;
-            $email .= "Sujet" . $sujet;
-            $email .= "Message :". $message;
-          }
-
-            //envoi du mail
-            $destinataire="sarahklewiec@gmail.com";
-            $form_action="index.php";
-            // Message de confirmation du mail
-            //$message_non_envoye="L'envoi du message a échoué, veuillez réessayer SVP.";
-            // Message d'erreur du formulaire
-            //$message_formulaire_invalide ="Veuillez vérifier vos coordonnées SVP.";
-            // Formulaire envoyé, récupération des champs
-
-            echo "From: ".$nom." ".$prenom."".
-                 "Genre: ".$sexe.
-                 "Adresse email: ".$mail.
-                 "Pays: ".$pays.
-                 "Sujet: ".$sujet.
-                 "Message: ".$message;
-            mail($destinataire,$sujet,$email);
 
           ?>
           </div>
